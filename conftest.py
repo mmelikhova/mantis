@@ -6,9 +6,9 @@ import os.path
 import importlib
 
 
-
 fixture = None
 target = None
+
 
 def load_config(file):
     global target
@@ -19,15 +19,17 @@ def load_config(file):
             target = json.load(f)
     return target
 
+
 @pytest.fixture
 def app(request):
     global fixture
     browser=request.config.getoption("--browser")
     web_config = load_config(request.config.getoption("--target"))['web']
+    webadmin = load_config(request.config.getoption("--target"))['webadmin']
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=web_config["baseUrl"])
+    fixture.session.ensure_login(username=webadmin["username"], password=webadmin["password"])
     return fixture
-
 
 
 @pytest.fixture(scope="session", autouse=True)

@@ -1,6 +1,6 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
-
+from fixture.project_managment import project_helper
 
 
 class Application:
@@ -15,6 +15,7 @@ class Application:
         else:
             raise ValueError("ERROR: Unrecognized browser %s" % browser)
         self.session=SessionHelper(self)
+        self.project = project_helper(self)
         self.base_url = base_url
         self.wd.implicitly_wait(2)
 
@@ -28,14 +29,6 @@ class Application:
     def open_page(self):
         wd=self.wd
         wd.get(self.base_url)
-
-    def return_homepage(self):
-        wd=self.wd
-        wd.find_element_by_link_text("home page").click()
-
-    def homepage(self):
-        wd=self.wd
-        wd.find_element_by_link_text("home").click()
 
     def destroy(self):
         self.wd.quit()
