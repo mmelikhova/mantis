@@ -11,13 +11,15 @@ class project_helper:
         pass
 
     def open_project_create_page(self):
-        wd =self.app.wd
-        wd.find_element_by_xpath("//input[@value='Create New Project']").click()
+        wd=self.app.wd
+        self.open_project_manage_page()
+        if not wd.current_url.endswith("/manage_proj_create_page.php"):
+            wd.find_element_by_xpath("//input[@value='Create New Project']").click()
+            self.implicitly_wait(3)
 
     def open_project_manage_page(self):
         wd=self.app.wd
-        wd.find_element_by_css_selector('td.menu:nth-child(1) > a:nth-child(7)').click()
-        wd.find_element_by_css_selector('span.bracket-link:nth-child(2) > a:nth-child(1)').click()
+        wd.get("http://localhost/mantisbt-1.2.20/manage_proj_page.php")
 
     def input_project_data(self, project):
         wd=self.app.wd
