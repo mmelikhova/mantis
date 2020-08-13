@@ -27,11 +27,9 @@ def config(request):
 @pytest.fixture
 def app(request, config):
      global fixture
-#    global target
      browser = request.config.getoption("--browser")
      if fixture is None or not fixture.is_valid():
          fixture = Application(browser=browser, config=config)
-#     fixture.session.ensure_login("administrator", "root")  # для тестов которым нужны админ права
      return fixture
 
 

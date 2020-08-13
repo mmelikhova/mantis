@@ -2,6 +2,8 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.project_managment import project_helper
 from fixture.james import JamesHelper
+from fixture.signup import SignupHelper
+from fixture.mail import MailHelper
 
 class Application:
 
@@ -17,6 +19,8 @@ class Application:
             raise ValueError("ERROR: Unrecognized browser %s" % browser)
         self.session=SessionHelper(self)
         self.project = project_helper(self)
+        self.signup=SignupHelper(self)
+        self.mail=MailHelper(self)
         self.james=JamesHelper(self)
         self.config = config
         self.base_url = config["web"]["baseUrl"]
